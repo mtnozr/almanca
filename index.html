@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="11 yaşındaki çocuklar için eğlenceli Almanca-Türkçe kelime kart oyunu">
+    <meta name="theme-color" content="#4CAF50">
+    <title>Almanca-Türkçe Kelime Oyunu</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="js/app.js" as="script">
+    <link rel="preload" href="js/words.js" as="script">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2 data-text="loading">Yükleniyor...</h2>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="app-container" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="app-title" data-text="appTitle">Almanca-Türkçe Kelime Oyunu</h1>
+            <div class="header-controls">
+                <button id="language-toggle" class="btn-icon" aria-label="Dil değiştir">
+                    <span class="flag">🇹🇷</span>
+                </button>
+                <button id="settings-btn" class="btn-icon" aria-label="Ayarlar">
+                    <span class="icon">⚙️</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Menu -->
+        <main id="main-menu" class="main-menu">
+            <div class="menu-grid">
+                <button id="play-btn" class="menu-btn primary" data-text="play">
+                    <span class="icon">🎮</span>
+                    <span class="text">Oyna</span>
+                </button>
+                
+                <button id="study-btn" class="menu-btn secondary" data-text="study">
+                    <span class="icon">📚</span>
+                    <span class="text">Kelime Çalış</span>
+                </button>
+                
+                <button id="progress-btn" class="menu-btn secondary" data-text="progress">
+                    <span class="icon">📊</span>
+                    <span class="text">İlerlemem</span>
+                </button>
+                
+                <button id="settings-menu-btn" class="menu-btn secondary" data-text="settings">
+                    <span class="icon">⚙️</span>
+                    <span class="text">Ayarlar</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Game Modes Screen -->
+        <div id="game-modes" class="screen" style="display: none;">
+            <div class="screen-header">
+                <button class="back-btn" data-text="back">← Geri</button>
+                <h2 data-text="selectGameMode">Oyun Modu Seç</h2>
+            </div>
+            
+            <div class="game-modes-grid">
+                <button class="game-mode-btn" data-mode="matching">
+                    <span class="icon">🔗</span>
+                    <span class="title" data-text="matching">Eşleştirme</span>
+                    <span class="description" data-text="matchingDesc">Kelimeleri eşleştir</span>
+                </button>
+                
+                <button class="game-mode-btn" data-mode="memory">
+                    <span class="icon">🧠</span>
+                    <span class="title" data-text="memory">Hafıza</span>
+                    <span class="description" data-text="memoryDesc">Kartları hatırla</span>
+                </button>
+                
+                <button class="game-mode-btn" data-mode="speed">
+                    <span class="icon">⚡</span>
+                    <span class="title" data-text="speed">Hız Turu</span>
+                    <span class="description" data-text="speedDesc">60 saniyede ne kadar kelime?</span>
+                </button>
+                
+                <button class="game-mode-btn" data-mode="fill">
+                    <span class="icon">✏️</span>
+                    <span class="title" data-text="fill">Boşluk Doldur</span>
+                    <span class="description" data-text="fillDesc">Eksik harfleri tamamla</span>
+                </button>
+                
+                <button class="game-mode-btn" data-mode="listen">
+                    <span class="icon">🎧</span>
+                    <span class="title" data-text="listen">Dinle ve Seç</span>
+                    <span class="description" data-text="listenDesc">Sesi dinle, doğru kelimeyi bul</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen" style="display: none;">
+            <div class="game-header">
+                <button class="back-btn" data-text="back">← Geri</button>
+                <div class="game-info">
+                    <span id="game-mode-title" class="game-mode-title"></span>
+                    <div class="game-stats">
+                        <span id="score" class="score">0</span>
+                        <span id="timer" class="timer"></span>
+                        <span id="hint-count" class="hint-count">💡 3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="game-content" class="game-content">
+                <!-- Game content will be dynamically generated -->
+            </div>
+            
+            <div class="game-controls">
+                <button id="hint-btn" class="btn secondary" data-text="hint">💡 İpucu</button>
+                <button id="sound-btn" class="btn secondary" data-text="sound">🔊 Ses</button>
+            </div>
+        </div>
+
+        <!-- Study Screen -->
+        <div id="study-screen" class="screen" style="display: none;">
+            <div class="screen-header">
+                <button class="back-btn" data-text="back">← Geri</button>
+                <h2 data-text="wordStudy">Kelime Çalış</h2>
+            </div>
+            
+            <div class="category-selector">
+                <button class="category-btn active" data-category="all" data-text="allCategories">Tüm Kategoriler</button>
+                <button class="category-btn" data-category="colors" data-text="colors">Renkler</button>
+                <button class="category-btn" data-category="numbers" data-text="numbers">Sayılar</button>
+                <button class="category-btn" data-category="animals" data-text="animals">Hayvanlar</button>
+                <button class="category-btn" data-category="school" data-text="school">Okul</button>
+                <button class="category-btn" data-category="family" data-text="family">Aile</button>
+                <button class="category-btn" data-category="food" data-text="food">Yiyecek</button>
+                <button class="category-btn" data-category="verbs" data-text="verbs">Fiiller</button>
+            </div>
+            
+            <div id="word-cards" class="word-cards">
+                <!-- Word cards will be dynamically generated -->
+            </div>
+        </div>
+
+        <!-- Progress Screen -->
+        <div id="progress-screen" class="screen" style="display: none;">
+            <div class="screen-header">
+                <button class="back-btn" data-text="back">← Geri</button>
+                <h2 data-text="myProgress">İlerlemem</h2>
+            </div>
+            
+            <div class="progress-stats">
+                <div class="stat-card">
+                    <h3 data-text="totalWords">Toplam Kelime</h3>
+                    <span id="total-words-count" class="stat-number">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3 data-text="correctAnswers">Doğru Cevaplar</h3>
+                    <span id="correct-answers-count" class="stat-number">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3 data-text="accuracy">Doğruluk</h3>
+                    <span id="accuracy-percentage" class="stat-number">0%</span>
+                </div>
+            </div>
+            
+            <div class="difficult-words">
+                <h3 data-text="difficultWords">Zorlandığın Kelimeler</h3>
+                <div id="difficult-words-list" class="difficult-words-list">
+                    <!-- Difficult words will be listed here -->
+                </div>
+            </div>
+            
+            <div class="achievements">
+                <h3 data-text="achievements">Rozetler</h3>
+                <div id="achievements-grid" class="achievements-grid">
+                    <!-- Achievements will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settings-screen" class="screen" style="display: none;">
+            <div class="screen-header">
+                <button class="back-btn" data-text="back">← Geri</button>
+                <h2 data-text="settings">Ayarlar</h2>
+            </div>
+            
+            <div class="settings-content">
+                <div class="setting-group">
+                    <h3 data-text="accessibility">Erişilebilirlik</h3>
+                    <label class="setting-item">
+                        <span data-text="highContrast">Yüksek Kontrast</span>
+                        <input type="checkbox" id="high-contrast">
+                    </label>
+                    <label class="setting-item">
+                        <span data-text="disableAnimations">Animasyonları Kapat</span>
+                        <input type="checkbox" id="disable-animations">
+                    </label>
+                    <label class="setting-item">
+                        <span data-text="largeText">Büyük Yazı</span>
+                        <input type="checkbox" id="large-text">
+                    </label>
+                </div>
+                
+                <div class="setting-group">
+                    <h3 data-text="sound">Ses</h3>
+                    <label class="setting-item">
+                        <span data-text="enableSound">Ses Efektleri</span>
+                        <input type="checkbox" id="enable-sound" checked>
+                    </label>
+                    <label class="setting-item">
+                        <span data-text="enableSpeech">Sesli Telaffuz</span>
+                        <input type="checkbox" id="enable-speech" checked>
+                    </label>
+                </div>
+                
+                <div class="setting-group">
+                    <h3 data-text="game">Oyun</h3>
+                    <label class="setting-item">
+                        <span data-text="hintsPerGame">Oyun Başına İpucu</span>
+                        <select id="hints-per-game">
+                            <option value="3">3</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                        </select>
+                    </label>
+                </div>
+                
+                <div class="setting-group">
+                    <h3 data-text="data">Veri</h3>
+                    <button id="reset-progress" class="btn danger" data-text="resetProgress">İlerlemeyi Sıfırla</button>
+                    <button id="export-data" class="btn secondary" data-text="exportData">Verileri Dışa Aktar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Modal -->
+        <div id="game-over-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2 data-text="gameOver">Oyun Bitti!</h2>
+                <div class="game-results">
+                    <div class="result-item">
+                        <span data-text="finalScore">Final Puanı:</span>
+                        <span id="final-score">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span data-text="correctAnswers">Doğru Cevaplar:</span>
+                        <span id="final-correct">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span data-text="timeSpent">Geçen Süre:</span>
+                        <span id="final-time">0s</span>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button id="play-again" class="btn primary" data-text="playAgain">Tekrar Oyna</button>
+                    <button id="back-to-menu" class="btn secondary" data-text="backToMenu">Ana Menü</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hint Modal -->
+        <div id="hint-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2 data-text="hint">İpucu</h2>
+                <p id="hint-text"></p>
+                <button id="close-hint" class="btn primary" data-text="close">Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => console.log('SW registered'))
+                    .catch(error => console.log('SW registration failed'));
+            });
+        }
+    </script>
+
+    <!-- App Scripts -->
+    <script src="js/words.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
