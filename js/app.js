@@ -30,18 +30,53 @@ class WordGame {
         this.hideLoadingScreen();
         this.updateProgressDisplay();
         this.updateAllTexts();
+        
+        // Ensure all modals are hidden on startup
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
+        });
     }
     
     setupEventListeners() {
         // Main menu buttons
-        document.getElementById('play-btn').addEventListener('click', () => this.showScreen('game-modes'));
-        document.getElementById('study-btn').addEventListener('click', () => this.showScreen('study-screen'));
-        document.getElementById('progress-btn').addEventListener('click', () => this.showScreen('progress-screen'));
-        document.getElementById('settings-menu-btn').addEventListener('click', () => this.showScreen('settings-screen'));
+        document.getElementById('play-btn').addEventListener('click', () => {
+            // Hide all modals first
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+            this.showScreen('game-modes');
+        });
+        document.getElementById('study-btn').addEventListener('click', () => {
+            // Hide all modals first
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+            this.showScreen('study-screen');
+        });
+        document.getElementById('progress-btn').addEventListener('click', () => {
+            // Hide all modals first
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+            this.showScreen('progress-screen');
+        });
+        document.getElementById('settings-menu-btn').addEventListener('click', () => {
+            // Hide all modals first
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+            this.showScreen('settings-screen');
+        });
         
         // Header controls
         document.getElementById('language-toggle').addEventListener('click', () => toggleLanguage());
-        document.getElementById('settings-btn').addEventListener('click', () => this.showScreen('settings-screen'));
+        document.getElementById('settings-btn').addEventListener('click', () => {
+            // Hide all modals first
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+            this.showScreen('settings-screen');
+        });
         
         // Back buttons
         document.querySelectorAll('.back-btn').forEach(btn => {
@@ -52,6 +87,10 @@ class WordGame {
         document.querySelectorAll('.game-mode-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const mode = btn.getAttribute('data-mode');
+                // Hide all modals first
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
                 this.startGame(mode);
             });
         });
@@ -96,6 +135,11 @@ class WordGame {
         setTimeout(() => {
             loadingScreen.style.display = 'none';
             app.style.display = 'block';
+            
+            // Ensure all modals are hidden when app starts
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
         }, 1500);
     }
     
@@ -103,6 +147,11 @@ class WordGame {
         // Hide all screens
         document.querySelectorAll('.screen, #main-menu').forEach(screen => {
             screen.style.display = 'none';
+        });
+        
+        // Hide all modals
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
         });
         
         // Show target screen
@@ -124,6 +173,11 @@ class WordGame {
         if (this.currentScreen === 'game-screen') {
             this.endGame();
         }
+        
+        // Hide all modals first
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
+        });
         
         const screenMap = {
             'game-modes': 'main-menu',
