@@ -19,6 +19,7 @@
     <link rel="preload" href="js/words.js" as="script">
 </head>
 <body>
+    <a href="#main-menu" class="skip-link">Menüye geç</a>
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-content">
@@ -43,7 +44,15 @@
         </header>
 
         <!-- Main Menu -->
-        <main id="main-menu" class="main-menu">
+        <main id="main-menu" class="main-menu" aria-labelledby="app-description">
+            <section class="intro-panel">
+                <p id="app-description" class="lead">11 yaşındaki çocuklar için hazırlanmış renkli ve güvenli bir kelime macerasına hoş geldin. Menüden istediğin modu seçerek Almanca-Türkçe kelimeleri eğlenceli kartlarla keşfet.</p>
+                <ul class="intro-tips">
+                    <li>Önce kısa süreli <strong>Hız Turu</strong> ile ısın, sonra diğer modları dene.</li>
+                    <li>Bir kelimeyi duymak istersen "Ses" düğmesine basabilir veya ipuçlarını kullanabilirsin.</li>
+                    <li>Renkleri ayırt etmekte zorlanıyorsan ayarlardan <strong>Yüksek Kontrast</strong> modunu aç.</li>
+                </ul>
+            </section>
             <div class="menu-grid">
                 <button id="play-btn" class="menu-btn primary" data-text="play">
                     <span class="icon">🎮</span>
@@ -112,14 +121,14 @@
             <div class="game-header">
                 <button class="back-btn" data-text="back">← Geri</button>
                 <div class="game-info">
-                    <span id="game-mode-title" class="game-mode-title"></span>
-                    <div class="game-stats">
-                        <span id="score" class="score">0</span>
-                        <span id="timer" class="timer"></span>
-                        <span id="hint-count" class="hint-count">💡 3</span>
+                        <span id="game-mode-title" class="game-mode-title"></span>
+                        <div class="game-stats">
+                        <span id="score" class="score" aria-live="polite">0</span>
+                        <span id="timer" class="timer" aria-live="polite"></span>
+                        <span id="hint-count" class="hint-count" aria-live="polite">💡 3</span>
+                        </div>
                     </div>
                 </div>
-            </div>
             
             <div id="game-content" class="game-content">
                 <!-- Game content will be dynamically generated -->
