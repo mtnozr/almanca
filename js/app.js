@@ -174,6 +174,17 @@ class WordGame {
                 this.loadWordCards();
             } else if (screenId === 'progress-screen') {
                 this.updateProgressDisplay();
+            } else if (screenId === 'game-screen') {
+                const hintBtn = document.getElementById('hint-btn');
+                const soundBtn = document.getElementById('sound-btn');
+                
+                if (this.currentGameMode === 'matching') {
+                    hintBtn.style.display = 'none';
+                    soundBtn.style.display = 'none';
+                } else {
+                    hintBtn.style.display = ''; // Reset to default
+                    soundBtn.style.display = ''; // Reset to default
+                }
             }
         }
     }
