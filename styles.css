@@ -857,11 +857,24 @@ body {
     border-color: var(--primary-dark);
 }
 
+.matching-card.incorrect {
+    background: var(--error-color);
+    color: var(--text-light);
+    border-color: var(--error-color);
+}
+
 .matching-card.matched {
     background: var(--success-color);
     color: var(--text-light);
     border-color: var(--success-color);
     pointer-events: none;
+}
+
+.matching-card.removed {
+    opacity: 0;
+    transform: scale(0.9);
+    pointer-events: none;
+    visibility: hidden;
 }
 
 .memory-game {

@@ -429,37 +429,44 @@ class WordGame {
     }
     
     handleMatchingCardClick(card) {
-        if (card.classList.contains('matched')) return;
-        
+        if (card.classList.contains('matched') || this.selectedCards.includes(card)) return;
+
         card.classList.add('selected');
         this.selectedCards.push(card);
-        
+
         if (this.selectedCards.length === 2) {
             const [card1, card2] = this.selectedCards;
             const word1 = card1.getAttribute('data-word');
             const word2 = card2.getAttribute('data-word');
-            
+
             setTimeout(() => {
                 if (word1 === word2) {
                     // Match found
-                    card1.classList.remove('selected');
-                    card2.classList.remove('selected');
-                    card1.classList.add('matched');
-                    card2.classList.add('matched');
+                    [card1, card2].forEach(matchCard => {
+                        matchCard.classList.remove('selected', 'incorrect');
+                        matchCard.classList.add('matched');
+                        matchCard.setAttribute('aria-hidden', 'true');
+                        setTimeout(() => {
+                            matchCard.classList.add('removed');
+                        }, 300);
+                    });
                     this.correctAnswer();
                 } else {
                     // No match
-                    card1.classList.remove('selected');
-                    card2.classList.remove('selected');
+                    [card1, card2].forEach(missCard => {
+                        missCard.classList.remove('selected');
+                        missCard.classList.add('incorrect');
+                        setTimeout(() => missCard.classList.remove('incorrect'), 800);
+                    });
                     this.wrongAnswer();
                 }
                 this.selectedCards = [];
-                
+
                 // Check if game is complete
                 if (document.querySelectorAll('.matched').length === this.currentWords.length * 2) {
                     this.endGame();
                 }
-            }, 1000);
+            }, 500);
         }
     }
     
