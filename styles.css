@@ -1257,6 +1257,16 @@ body {
         min-height: 100px;
     }
     
+    .levels-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: var(--spacing-md);
+    }
+    
+    .level-btn {
+        padding: var(--spacing-md);
+        min-height: 80px;
+    }
+    
     .word-cards {
         grid-template-columns: 1fr;
     }
