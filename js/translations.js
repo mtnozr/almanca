@@ -13,6 +13,9 @@ const TRANSLATIONS = {
         
         // Game Modes
         selectGameMode: "Oyun Modu Seç",
+        selectLevel: "Bölüm Seç",
+        level: "Bölüm",
+        round: "Tur",
         matching: "Eşleştirme",
         matchingDesc: "Kelimeleri eşleştir",
         memory: "Hafıza",

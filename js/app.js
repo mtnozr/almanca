@@ -5,6 +5,10 @@ class WordGame {
     constructor() {
         this.currentScreen = 'main-menu';
         this.currentGameMode = null;
+        this.currentLevel = 1;
+        this.levelWords = [];
+        this.currentRound = 0;
+        this.totalRounds = 0;
         this.gameState = {
             score: 0,
             correctAnswers: 0,
@@ -91,7 +95,12 @@ class WordGame {
                 document.querySelectorAll('.modal').forEach(modal => {
                     modal.style.display = 'none';
                 });
-                this.startGame(mode);
+                
+                if (mode === 'matching') {
+                    this.showLevelSelection();
+                } else {
+                    this.startGame(mode);
+                }
             });
         });
         
@@ -181,7 +190,8 @@ class WordGame {
         
         const screenMap = {
             'game-modes': 'main-menu',
-            'game-screen': 'game-modes',
+            'level-selection': 'game-modes',
+            'game-screen': this.currentGameMode === 'matching' ? 'level-selection' : 'game-modes',
             'study-screen': 'main-menu',
             'progress-screen': 'main-menu',
             'settings-screen': 'main-menu'
@@ -193,6 +203,127 @@ class WordGame {
         }
     }
     
+    showLevelSelection() {
+        this.showScreen('level-selection');
+        const grid = document.getElementById('levels-grid');
+        grid.innerHTML = '';
+
+        for (let i = 1; i <= 10; i++) {
+            const levelData = LEVELS[i];
+            const progress = this.progress.levels[i] || {};
+            const isLocked = i > 1 && !this.progress.levels[i-1]?.completed;
+            const isCompleted = progress.completed;
+            
+            const btn = document.createElement('div');
+            btn.className = `level-btn ${isLocked ? 'locked' : ''} ${isCompleted ? 'completed' : ''}`;
+            if (!isLocked) {
+                btn.onclick = () => this.startLevel(i);
+            }
+            
+            let starsHtml = '';
+            for (let s = 0; s < 3; s++) {
+                starsHtml += `<span>${s < (progress.stars || 0) ? '⭐' : '☆'}</span>`;
+            }
+
+            btn.innerHTML = `
+                <div class="level-number">${i}</div>
+                <div class="level-title">${levelData.title}</div>
+                <div class="level-stars">${starsHtml}</div>
+                <div class="level-desc" style="font-size: 12px; color: #666;">${levelData.categories.join(', ')}</div>
+            `;
+            
+            grid.appendChild(btn);
+        }
+    }
+
+    startLevel(level) {
+        this.currentLevel = level;
+        this.levelWords = getWordsForLevel(level); // 30 words
+        this.currentRound = 1;
+        this.totalRounds = 5;
+        this.gameState.score = 0; // Reset score for the level
+        
+        this.currentGameMode = 'matching';
+        this.showScreen('game-screen');
+        this.startRound();
+    }
+
+    startRound() {
+        // Calculate words for this round (6 words per round)
+        const startIdx = (this.currentRound - 1) * 6;
+        this.currentWords = this.levelWords.slice(startIdx, startIdx + 6);
+        
+        // Update title
+        const gameModeTitle = document.getElementById('game-mode-title');
+        gameModeTitle.textContent = `${t('matching')} - ${t('level')} ${this.currentLevel} - ${t('round')} ${this.currentRound}/${this.totalRounds}`;
+        
+        // Reset round state but keep score
+        this.selectedCards = [];
+        this.gameState.streak = 0; // Reset streak for new round maybe? Or keep it? Let's reset for safety.
+        
+        // Create matching game with these words
+        this.createMatchingGame();
+        
+        // Start timer if it's the first round, otherwise continue?
+        // Actually for levels, maybe we track total time or round time?
+        // Let's just run the timer continuously for the whole level.
+        if (this.currentRound === 1) {
+            this.gameStartTime = Date.now();
+            this.gameState.timeElapsed = 0;
+            this.gameState.hintsUsed = 0;
+            this.gameState.correctAnswers = 0;
+            this.gameState.wrongAnswers = 0;
+            this.startTimer();
+        }
+        
+        this.updateGameStats();
+    }
+
+    nextRound() {
+        this.currentRound++;
+        if (this.currentRound <= this.totalRounds) {
+            // Show a brief success message or transition?
+            // For now just immediate transition
+            this.startRound();
+        } else {
+            this.endLevel();
+        }
+    }
+
+    endLevel() {
+        if (this.gameTimer) {
+            clearInterval(this.gameTimer);
+        }
+        
+        this.gameState.timeElapsed = Math.floor((Date.now() - this.gameStartTime) / 1000);
+        
+        // Calculate stars based on score/mistakes
+        // Max score per round: 6 words * ~10-20 points = ~100 points. Total ~500.
+        // Let's say: 3 stars for > 80% accuracy/score, 2 for > 60%, 1 for completion.
+        
+        const maxPossibleScore = this.totalRounds * 6 * 10; // Base score
+        const percentage = this.gameState.score / maxPossibleScore; // Rough estimate
+        let stars = 1;
+        if (percentage > 0.8) stars = 3;
+        else if (percentage > 0.5) stars = 2;
+        
+        // Save level progress
+        if (!this.progress.levels) this.progress.levels = {};
+        const previousStars = this.progress.levels[this.currentLevel]?.stars || 0;
+        
+        this.progress.levels[this.currentLevel] = {
+            completed: true,
+            stars: Math.max(stars, previousStars),
+            score: Math.max(this.gameState.score, this.progress.levels[this.currentLevel]?.score || 0)
+        };
+        
+        this.saveProgress();
+        
+        // Show completion modal
+        // We can reuse showGameOverModal but maybe customize it for Level Complete
+        this.showGameOverModal(true, stars);
+    }
+
     startGame(mode) {
         this.currentGameMode = mode;
         this.resetGameState();
@@ -464,7 +595,11 @@ class WordGame {
 
                 // Check if game is complete
                 if (document.querySelectorAll('.matched').length === this.currentWords.length * 2) {
-                    this.endGame();
+                    if (this.currentGameMode === 'matching') {
+                        setTimeout(() => this.nextRound(), 500);
+                    } else {
+                        this.endGame();
+                    }
                 }
             }, 500);
         }
@@ -647,8 +782,33 @@ class WordGame {
         this.showGameOverModal();
     }
     
-    showGameOverModal() {
+    showGameOverModal(isLevelComplete = false, stars = 0) {
         const modal = document.getElementById('game-over-modal');
+        const title = modal.querySelector('h2');
+        
+        // Remove existing stars if any
+        const existingStars = document.getElementById('level-stars-display');
+        if (existingStars) existingStars.remove();
+
+        if (isLevelComplete) {
+            title.textContent = `${t('level')} ${this.currentLevel} ${t('gameComplete')}`;
+            
+            // Add stars display
+            const starsContainer = document.createElement('div');
+            starsContainer.id = 'level-stars-display';
+            starsContainer.style.cssText = 'font-size: 48px; color: #FFC107; margin: 20px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); letter-spacing: 10px;';
+            
+            let starsHtml = '';
+            for (let i = 0; i < 3; i++) {
+                starsHtml += i < stars ? ' ' : '';
+            }
+            starsContainer.innerHTML = starsHtml;
+            
+            modal.querySelector('.game-results').before(starsContainer);
+        } else {
+            title.textContent = t('gameOver');
+        }
+
         document.getElementById('final-score').textContent = this.gameState.score;
         document.getElementById('final-correct').textContent = this.gameState.correctAnswers;
         document.getElementById('final-time').textContent = `${this.gameState.timeElapsed}s`;
@@ -658,7 +818,11 @@ class WordGame {
     
     restartGame() {
         document.getElementById('game-over-modal').style.display = 'none';
-        this.startGame(this.currentGameMode);
+        if (this.currentGameMode === 'matching') {
+            this.startLevel(this.currentLevel);
+        } else {
+            this.startGame(this.currentGameMode);
+        }
     }
     
     showHint() {
@@ -915,7 +1079,8 @@ class WordGame {
             wrongAnswers: 0,
             wordStats: {},
             daysPlayed: 0,
-            lastPlayed: null
+            lastPlayed: null,
+            levels: {} // { 1: { completed: true, stars: 3, score: 100 } }
         };
         
         const saved = localStorage.getItem('wordGameProgress');
@@ -940,7 +1105,8 @@ class WordGame {
                 wrongAnswers: 0,
                 wordStats: {},
                 daysPlayed: 0,
-                lastPlayed: null
+                lastPlayed: null,
+                levels: {}
             };
             this.saveProgress();
             this.updateProgressDisplay();
