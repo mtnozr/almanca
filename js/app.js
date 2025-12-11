@@ -211,7 +211,8 @@ class WordGame {
         for (let i = 1; i <= 10; i++) {
             const levelData = LEVELS[i];
             const progress = this.progress.levels[i] || {};
-            const isLocked = i > 1 && !this.progress.levels[i-1]?.completed;
+            // Allow user to select any level in matching mode
+            const isLocked = false; 
             const isCompleted = progress.completed;
             
             const btn = document.createElement('div');
