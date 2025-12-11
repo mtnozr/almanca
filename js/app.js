@@ -20,6 +20,7 @@ class WordGame {
         this.currentWords = [];
         this.selectedCards = [];
         this.gameStartTime = null;
+        this.matchingLevelIndex = 0;
         
         this.init();
     }
@@ -195,6 +196,9 @@ class WordGame {
     
     startGame(mode) {
         this.currentGameMode = mode;
+        if (mode === 'matching') {
+            this.matchingLevelIndex = 0;
+        }
         this.resetGameState();
         this.showScreen('game-screen');
         this.loadGameContent();
@@ -217,12 +221,22 @@ class WordGame {
     loadGameContent() {
         const gameContent = document.getElementById('game-content');
         const gameModeTitle = document.getElementById('game-mode-title');
-        
+
+        this.selectedCards = [];
+
         // Set game mode title
-        gameModeTitle.textContent = t(this.currentGameMode);
-        
+        if (this.currentGameMode === 'matching') {
+            gameModeTitle.textContent = `${t(this.currentGameMode)} - Bölüm ${this.matchingLevelIndex + 1}/${getMatchingLevelCount()}`;
+        } else {
+            gameModeTitle.textContent = t(this.currentGameMode);
+        }
+
         // Load words based on game mode
-        this.currentWords = getRandomWords(10);
+        if (this.currentGameMode === 'matching') {
+            this.currentWords = getMatchingLevelWords(this.matchingLevelIndex);
+        } else {
+            this.currentWords = getRandomWords(10);
+        }
         
         // Generate game content based on mode
         switch (this.currentGameMode) {
@@ -429,37 +443,59 @@ class WordGame {
     }
     
     handleMatchingCardClick(card) {
-        if (card.classList.contains('matched')) return;
-        
+        if (card.classList.contains('matched') || this.selectedCards.includes(card)) return;
+
         card.classList.add('selected');
         this.selectedCards.push(card);
-        
+
         if (this.selectedCards.length === 2) {
             const [card1, card2] = this.selectedCards;
             const word1 = card1.getAttribute('data-word');
             const word2 = card2.getAttribute('data-word');
-            
+
             setTimeout(() => {
                 if (word1 === word2) {
                     // Match found
-                    card1.classList.remove('selected');
-                    card2.classList.remove('selected');
-                    card1.classList.add('matched');
-                    card2.classList.add('matched');
+                    [card1, card2].forEach(matchCard => {
+                        matchCard.classList.remove('selected', 'incorrect');
+                        matchCard.classList.add('matched');
+                        matchCard.setAttribute('aria-hidden', 'true');
+                        setTimeout(() => {
+                            matchCard.classList.add('removed');
+                        }, 300);
+                    });
                     this.correctAnswer();
                 } else {
                     // No match
-                    card1.classList.remove('selected');
-                    card2.classList.remove('selected');
+                    [card1, card2].forEach(missCard => {
+                        missCard.classList.remove('selected');
+                        missCard.classList.add('incorrect');
+                        setTimeout(() => missCard.classList.remove('incorrect'), 800);
+                    });
                     this.wrongAnswer();
                 }
                 this.selectedCards = [];
-                
+
                 // Check if game is complete
                 if (document.querySelectorAll('.matched').length === this.currentWords.length * 2) {
-                    this.endGame();
+                    this.handleMatchingLevelComplete();
                 }
-            }, 1000);
+            }, 500);
+        }
+    }
+
+    handleMatchingLevelComplete() {
+        if (this.currentGameMode !== 'matching') {
+            this.endGame();
+            return;
+        }
+
+        const nextLevel = this.matchingLevelIndex + 1;
+        if (nextLevel < getMatchingLevelCount()) {
+            this.matchingLevelIndex = nextLevel;
+            this.loadGameContent();
+        } else {
+            this.endGame();
         }
     }
     

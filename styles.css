@@ -107,6 +107,24 @@ body {
     overflow-x: hidden;
 }
 
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: var(--primary-dark);
+    color: var(--text-light);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    z-index: 10000;
+    text-decoration: none;
+    box-shadow: var(--shadow-medium);
+}
+
+.skip-link:focus-visible {
+    left: var(--spacing-md);
+    top: var(--spacing-md);
+}
+
 /* Loading Screen */
 .loading-screen {
     position: fixed;
@@ -199,8 +217,41 @@ body {
     flex: 1;
     padding: var(--spacing-xl) var(--spacing-lg);
     display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+}
+
+.intro-panel {
+    max-width: 900px;
+    width: 100%;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-light);
+}
+
+.lead {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.intro-tips {
+    list-style: none;
+    display: grid;
+    gap: var(--spacing-sm);
+    padding: 0;
+}
+
+.intro-tips li {
+    background: var(--border-light);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
 }
 
 .menu-grid {
@@ -228,6 +279,11 @@ body {
     font-weight: bold;
     min-height: 120px;
     box-shadow: var(--shadow-light);
+}
+
+.menu-btn:focus-visible {
+    outline: 3px solid var(--accent-dark);
+    outline-offset: 4px;
 }
 
 .menu-btn:hover {
@@ -306,6 +362,11 @@ body {
     gap: var(--spacing-md);
     text-align: center;
     box-shadow: var(--shadow-light);
+}
+
+.game-mode-btn:focus-visible {
+    outline: 3px solid var(--secondary-dark);
+    outline-offset: 4px;
 }
 
 .game-mode-btn:hover {
@@ -408,6 +469,24 @@ body {
     align-items: center;
     justify-content: center;
     gap: var(--spacing-sm);
+}
+
+.btn:focus-visible,
+.btn-icon:focus-visible,
+.category-btn:focus-visible,
+.back-btn:focus-visible,
+.game-mode-btn:focus-visible,
+.menu-btn:focus-visible,
+.word-card:focus-visible,
+.matching-card:focus-visible,
+.memory-card:focus-visible,
+.fill-input:focus-visible,
+.listen-options button:focus-visible,
+.speed-input:focus-visible,
+.setting-item input:focus-visible,
+.setting-item select:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
 .btn:hover {
@@ -746,7 +825,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--spacing-lg);
     width: 100%;
-    max-width: 800px;
+    max-width: 1200px;
 }
 
 .matching-card {
@@ -778,11 +857,24 @@ body {
     border-color: var(--primary-dark);
 }
 
+.matching-card.incorrect {
+    background: var(--error-color);
+    color: var(--text-light);
+    border-color: var(--error-color);
+}
+
 .matching-card.matched {
     background: var(--success-color);
     color: var(--text-light);
     border-color: var(--success-color);
     pointer-events: none;
+}
+
+.matching-card.removed {
+    opacity: 0;
+    transform: scale(0.9);
+    pointer-events: none;
+    visibility: hidden;
 }
 
 .memory-game {

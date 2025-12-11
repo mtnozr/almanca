@@ -288,6 +288,46 @@ const getAllWords = () => {
     return Object.values(WORD_DATABASE).flat();
 };
 
+// Matching game level configuration
+const MATCHING_LEVEL_SIZE = 30;
+const MATCHING_LEVEL_COUNT = 10;
+
+const buildMatchingLevels = () => {
+    const baseWords = getAllWords();
+    let shuffled = [...baseWords].sort(() => 0.5 - Math.random());
+    const levels = [];
+
+    let index = 0;
+    for (let i = 0; i < MATCHING_LEVEL_COUNT; i++) {
+        const levelWords = [];
+        while (levelWords.length < MATCHING_LEVEL_SIZE) {
+            if (index >= shuffled.length) {
+                shuffled = [...baseWords].sort(() => 0.5 - Math.random());
+                index = 0;
+            }
+
+            const word = shuffled[index];
+            index++;
+
+            const alreadyUsed = levelWords.some(entry => entry.german === word.german && entry.turkish === word.turkish);
+            if (!alreadyUsed) {
+                levelWords.push(word);
+            }
+        }
+        levels.push(levelWords);
+    }
+
+    return levels;
+};
+
+const MATCHING_LEVELS = buildMatchingLevels();
+
+const getMatchingLevelWords = (levelIndex = 0) => {
+    return MATCHING_LEVELS[levelIndex] || MATCHING_LEVELS[0];
+};
+
+const getMatchingLevelCount = () => MATCHING_LEVELS.length;
+
 // Get words by category
 const getWordsByCategory = (category) => {
     if (category === 'all') {
@@ -327,6 +367,8 @@ if (typeof module !== 'undefined' && module.exports) {
         getRandomWords,
         getWordByGerman,
         getWordByTurkish,
-        getCategories
+        getCategories,
+        getMatchingLevelWords,
+        getMatchingLevelCount
     };
 }
