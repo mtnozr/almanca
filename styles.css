@@ -166,6 +166,29 @@ body {
     flex-direction: column;
 }
 
+/* Footer */
+.app-footer {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+}
+
+.app-footer a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    font-weight: bold;
+    transition: var(--transition-fast);
+}
+
+.app-footer a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
 /* Header */
 .header {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
