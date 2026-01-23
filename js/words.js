@@ -154,12 +154,11 @@ const WORD_DATABASE = {
         { german: "Großeltern", article: "die", turkish: "büyükanne ve büyükbaba", icon: "👴👵", category: "family" },
         { german: "Enkel", article: "der", turkish: "torun", icon: "👶", category: "family" },
         { german: "Enkelin", article: "die", turkish: "torun", icon: "👶", category: "family" },
-        { german: "Neffe", article: "der", turkish: "yeğen", icon: "👨‍👦", category: "family" },
-        { german: "Nichte", article: "die", turkish: "yeğen", icon: "👩‍👧", category: "family" },
-        { german: "Schwiegermutter", article: "die", turkish: "kayınvalide", icon: "👩", category: "family" },
-        { german: "Schwiegervater", article: "der", turkish: "kayınpeder", icon: "👨", category: "family" },
-        { german: "Schwager", article: "der", turkish: "enişte", icon: "👨", category: "family" },
-        { german: "Schwägerin", article: "die", turkish: "gelin", icon: "👩", category: "family" }
+        { german: "Neffe", article: "der", turkish: "yeğen (erkek)", icon: "👦", category: "family" },
+        { german: "Nichte", article: "die", turkish: "yeğen (kız)", icon: "👧", category: "family" },
+        { german: "Freund", article: "der", turkish: "arkadaş (erkek)", icon: "👦", category: "family" },
+        { german: "Freundin", article: "die", turkish: "arkadaş (kız)", icon: "👧", category: "family" },
+        { german: "Nachbar", article: "der", turkish: "komşu", icon: "🏠", category: "family" }
     ],
     
     food: [
@@ -314,7 +313,7 @@ const WORD_DATABASE = {
         { german: "Pullover", article: "der", turkish: "kazak", icon: "🧥", category: "clothes" },
         { german: "Jacke", article: "die", turkish: "ceket", icon: "🧥", category: "clothes" },
         { german: "Mantel", article: "der", turkish: "palto", icon: "🧥", category: "clothes" },
-        { german: "Schuh", article: "der", turkish: "ayakkabı", icon: "u00👟", category: "clothes" },
+        { german: "Schuh", article: "der", turkish: "ayakkabı", icon: "👟", category: "clothes" },
         { german: "Socke", article: "die", turkish: "çorap", icon: "🧦", category: "clothes" },
         { german: "Hut", article: "der", turkish: "şapka", icon: "👒", category: "clothes" },
         { german: "Mütze", article: "die", turkish: "bere", icon: "🧢", category: "clothes" },
@@ -402,7 +401,6 @@ const WORD_DATABASE = {
         { german: "Arzt", article: "der", turkish: "doktor", icon: "👨‍⚕️", category: "jobs" },
         { german: "Ärztin", article: "die", turkish: "doktor", icon: "👩‍⚕️", category: "jobs" },
         { german: "Lehrer", article: "der", turkish: "öğretmen", icon: "👨‍🏫", category: "jobs" },
-        { german: "Schüler", article: "der", turkish: "öğrenci", icon: "👨‍🎓", category: "jobs" },
         { german: "Polizist", article: "der", turkish: "polis", icon: "👮‍♂️", category: "jobs" },
         { german: "Feuerwehrmann", article: "der", turkish: "itfaiyeci", icon: "👨‍🚒", category: "jobs" },
         { german: "Koch", article: "der", turkish: "aşçı", icon: "👨‍🍳", category: "jobs" },
@@ -414,25 +412,177 @@ const WORD_DATABASE = {
         { german: "Verkäufer", article: "der", turkish: "satıcı", icon: "🏪", category: "jobs" },
         { german: "Kellner", article: "der", turkish: "garson", icon: "🍽️", category: "jobs" },
         { german: "Sänger", article: "der", turkish: "şarkıcı", icon: "🎤", category: "jobs" },
-        { german: "Maler", article: "der", turkish: "ressam/boyacı", icon: "🎨", category: "jobs" },
-        { german: "Soldat", article: "der", turkish: "asker", icon: "💂", category: "jobs" },
+        { german: "Maler", article: "der", turkish: "ressam", icon: "🎨", category: "jobs" },
         { german: "Tierarzt", article: "der", turkish: "veteriner", icon: "🐕‍🦺", category: "jobs" },
-        { german: "Ingenieur", article: "der", turkish: "mühendis", icon: "👷", category: "jobs" }
+        { german: "Sportler", article: "der", turkish: "sporcu", icon: "⚽", category: "jobs" },
+        { german: "Musiker", article: "der", turkish: "müzisyen", icon: "🎵", category: "jobs" },
+        { german: "Zahnarzt", article: "der", turkish: "diş doktoru", icon: "🦷", category: "jobs" }
+    ],
+
+    days: [
+        { german: "Montag", article: "der", turkish: "pazartesi", icon: "1️⃣", category: "days" },
+        { german: "Dienstag", article: "der", turkish: "salı", icon: "2️⃣", category: "days" },
+        { german: "Mittwoch", article: "der", turkish: "çarşamba", icon: "3️⃣", category: "days" },
+        { german: "Donnerstag", article: "der", turkish: "perşembe", icon: "4️⃣", category: "days" },
+        { german: "Freitag", article: "der", turkish: "cuma", icon: "5️⃣", category: "days" },
+        { german: "Samstag", article: "der", turkish: "cumartesi", icon: "6️⃣", category: "days" },
+        { german: "Sonntag", article: "der", turkish: "pazar", icon: "7️⃣", category: "days" },
+        { german: "Tag", article: "der", turkish: "gün", icon: "☀️", category: "days" },
+        { german: "Woche", article: "die", turkish: "hafta", icon: "📅", category: "days" },
+        { german: "Wochenende", article: "das", turkish: "hafta sonu", icon: "🎉", category: "days" },
+        { german: "heute", article: "", turkish: "bugün", icon: "📍", category: "days" },
+        { german: "morgen", article: "", turkish: "yarın", icon: "➡️", category: "days" },
+        { german: "gestern", article: "", turkish: "dün", icon: "⬅️", category: "days" }
+    ],
+
+    months: [
+        { german: "Januar", article: "der", turkish: "ocak", icon: "❄️", category: "months" },
+        { german: "Februar", article: "der", turkish: "şubat", icon: "💝", category: "months" },
+        { german: "März", article: "der", turkish: "mart", icon: "🌱", category: "months" },
+        { german: "April", article: "der", turkish: "nisan", icon: "🌧️", category: "months" },
+        { german: "Mai", article: "der", turkish: "mayıs", icon: "🌸", category: "months" },
+        { german: "Juni", article: "der", turkish: "haziran", icon: "☀️", category: "months" },
+        { german: "Juli", article: "der", turkish: "temmuz", icon: "🏖️", category: "months" },
+        { german: "August", article: "der", turkish: "ağustos", icon: "🌻", category: "months" },
+        { german: "September", article: "der", turkish: "eylül", icon: "🍂", category: "months" },
+        { german: "Oktober", article: "der", turkish: "ekim", icon: "🎃", category: "months" },
+        { german: "November", article: "der", turkish: "kasım", icon: "🍁", category: "months" },
+        { german: "Dezember", article: "der", turkish: "aralık", icon: "🎄", category: "months" },
+        { german: "Monat", article: "der", turkish: "ay", icon: "📅", category: "months" },
+        { german: "Jahr", article: "das", turkish: "yıl", icon: "🗓️", category: "months" }
+    ],
+
+    seasons: [
+        { german: "Frühling", article: "der", turkish: "ilkbahar", icon: "🌸", category: "seasons" },
+        { german: "Sommer", article: "der", turkish: "yaz", icon: "☀️", category: "seasons" },
+        { german: "Herbst", article: "der", turkish: "sonbahar", icon: "🍂", category: "seasons" },
+        { german: "Winter", article: "der", turkish: "kış", icon: "❄️", category: "seasons" },
+        { german: "Jahreszeit", article: "die", turkish: "mevsim", icon: "🌍", category: "seasons" },
+        { german: "warm", article: "", turkish: "sıcak", icon: "🌡️", category: "seasons" },
+        { german: "kalt", article: "", turkish: "soğuk", icon: "🥶", category: "seasons" },
+        { german: "heiß", article: "", turkish: "çok sıcak", icon: "🔥", category: "seasons" },
+        { german: "kühl", article: "", turkish: "serin", icon: "🌬️", category: "seasons" }
+    ],
+
+    time: [
+        { german: "Uhr", article: "die", turkish: "saat", icon: "🕐", category: "time" },
+        { german: "Minute", article: "die", turkish: "dakika", icon: "⏱️", category: "time" },
+        { german: "Stunde", article: "die", turkish: "saat (süre)", icon: "⏰", category: "time" },
+        { german: "Morgen", article: "der", turkish: "sabah", icon: "🌅", category: "time" },
+        { german: "Mittag", article: "der", turkish: "öğle", icon: "☀️", category: "time" },
+        { german: "Nachmittag", article: "der", turkish: "öğleden sonra", icon: "🌤️", category: "time" },
+        { german: "Abend", article: "der", turkish: "akşam", icon: "🌆", category: "time" },
+        { german: "Nacht", article: "die", turkish: "gece", icon: "🌙", category: "time" },
+        { german: "früh", article: "", turkish: "erken", icon: "🌄", category: "time" },
+        { german: "spät", article: "", turkish: "geç", icon: "🌃", category: "time" },
+        { german: "jetzt", article: "", turkish: "şimdi", icon: "⏰", category: "time" },
+        { german: "später", article: "", turkish: "sonra", icon: "⏳", category: "time" },
+        { german: "immer", article: "", turkish: "her zaman", icon: "♾️", category: "time" },
+        { german: "nie", article: "", turkish: "asla", icon: "🚫", category: "time" },
+        { german: "oft", article: "", turkish: "sık sık", icon: "🔄", category: "time" }
+    ],
+
+    adjectives: [
+        { german: "groß", article: "", turkish: "büyük", icon: "📏", category: "adjectives" },
+        { german: "klein", article: "", turkish: "küçük", icon: "🔹", category: "adjectives" },
+        { german: "gut", article: "", turkish: "iyi", icon: "👍", category: "adjectives" },
+        { german: "schlecht", article: "", turkish: "kötü", icon: "👎", category: "adjectives" },
+        { german: "schön", article: "", turkish: "güzel", icon: "✨", category: "adjectives" },
+        { german: "hässlich", article: "", turkish: "çirkin", icon: "😬", category: "adjectives" },
+        { german: "neu", article: "", turkish: "yeni", icon: "🆕", category: "adjectives" },
+        { german: "alt", article: "", turkish: "eski/yaşlı", icon: "📜", category: "adjectives" },
+        { german: "jung", article: "", turkish: "genç", icon: "👶", category: "adjectives" },
+        { german: "schnell", article: "", turkish: "hızlı", icon: "🚀", category: "adjectives" },
+        { german: "langsam", article: "", turkish: "yavaş", icon: "🐢", category: "adjectives" },
+        { german: "leicht", article: "", turkish: "kolay/hafif", icon: "🪶", category: "adjectives" },
+        { german: "schwer", article: "", turkish: "zor/ağır", icon: "🏋️", category: "adjectives" },
+        { german: "lang", article: "", turkish: "uzun", icon: "📐", category: "adjectives" },
+        { german: "kurz", article: "", turkish: "kısa", icon: "📍", category: "adjectives" },
+        { german: "dick", article: "", turkish: "kalın/şişman", icon: "⬛", category: "adjectives" },
+        { german: "dünn", article: "", turkish: "ince/zayıf", icon: "📄", category: "adjectives" },
+        { german: "teuer", article: "", turkish: "pahalı", icon: "💰", category: "adjectives" },
+        { german: "billig", article: "", turkish: "ucuz", icon: "🏷️", category: "adjectives" },
+        { german: "laut", article: "", turkish: "gürültülü", icon: "📢", category: "adjectives" },
+        { german: "leise", article: "", turkish: "sessiz", icon: "🤫", category: "adjectives" },
+        { german: "hell", article: "", turkish: "aydınlık", icon: "💡", category: "adjectives" },
+        { german: "dunkel", article: "", turkish: "karanlık", icon: "🌑", category: "adjectives" },
+        { german: "voll", article: "", turkish: "dolu", icon: "🥛", category: "adjectives" },
+        { german: "leer", article: "", turkish: "boş", icon: "🫙", category: "adjectives" },
+        { german: "richtig", article: "", turkish: "doğru", icon: "✅", category: "adjectives" },
+        { german: "falsch", article: "", turkish: "yanlış", icon: "❌", category: "adjectives" },
+        { german: "glücklich", article: "", turkish: "mutlu", icon: "😊", category: "adjectives" },
+        { german: "traurig", article: "", turkish: "üzgün", icon: "😢", category: "adjectives" },
+        { german: "müde", article: "", turkish: "yorgun", icon: "😴", category: "adjectives" }
+    ],
+
+    questions: [
+        { german: "was", article: "", turkish: "ne", icon: "❓", category: "questions" },
+        { german: "wer", article: "", turkish: "kim", icon: "👤", category: "questions" },
+        { german: "wo", article: "", turkish: "nerede", icon: "📍", category: "questions" },
+        { german: "wann", article: "", turkish: "ne zaman", icon: "🕐", category: "questions" },
+        { german: "warum", article: "", turkish: "neden", icon: "🤔", category: "questions" },
+        { german: "wie", article: "", turkish: "nasıl", icon: "🔧", category: "questions" },
+        { german: "wie viel", article: "", turkish: "ne kadar", icon: "🔢", category: "questions" },
+        { german: "wie viele", article: "", turkish: "kaç tane", icon: "🔢", category: "questions" },
+        { german: "welcher", article: "", turkish: "hangi", icon: "👆", category: "questions" },
+        { german: "woher", article: "", turkish: "nereden", icon: "🔙", category: "questions" },
+        { german: "wohin", article: "", turkish: "nereye", icon: "➡️", category: "questions" }
+    ],
+
+    transport: [
+        { german: "Auto", article: "das", turkish: "araba", icon: "🚗", category: "transport" },
+        { german: "Bus", article: "der", turkish: "otobüs", icon: "🚌", category: "transport" },
+        { german: "Zug", article: "der", turkish: "tren", icon: "🚂", category: "transport" },
+        { german: "Fahrrad", article: "das", turkish: "bisiklet", icon: "🚲", category: "transport" },
+        { german: "Motorrad", article: "das", turkish: "motosiklet", icon: "🏍️", category: "transport" },
+        { german: "Flugzeug", article: "das", turkish: "uçak", icon: "✈️", category: "transport" },
+        { german: "Schiff", article: "das", turkish: "gemi", icon: "🚢", category: "transport" },
+        { german: "Boot", article: "das", turkish: "tekne", icon: "⛵", category: "transport" },
+        { german: "U-Bahn", article: "die", turkish: "metro", icon: "🚇", category: "transport" },
+        { german: "Straßenbahn", article: "die", turkish: "tramvay", icon: "🚃", category: "transport" },
+        { german: "Taxi", article: "das", turkish: "taksi", icon: "🚕", category: "transport" },
+        { german: "Roller", article: "der", turkish: "scooter", icon: "🛴", category: "transport" },
+        { german: "Hubschrauber", article: "der", turkish: "helikopter", icon: "🚁", category: "transport" },
+        { german: "Ampel", article: "die", turkish: "trafik lambası", icon: "🚦", category: "transport" },
+        { german: "Haltestelle", article: "die", turkish: "durak", icon: "🚏", category: "transport" }
+    ],
+
+    hobbies: [
+        { german: "Hobby", article: "das", turkish: "hobi", icon: "🎯", category: "hobbies" },
+        { german: "Sport", article: "der", turkish: "spor", icon: "⚽", category: "hobbies" },
+        { german: "Fußball", article: "der", turkish: "futbol", icon: "⚽", category: "hobbies" },
+        { german: "Basketball", article: "der", turkish: "basketbol", icon: "🏀", category: "hobbies" },
+        { german: "Tennis", article: "das", turkish: "tenis", icon: "🎾", category: "hobbies" },
+        { german: "Schwimmen", article: "das", turkish: "yüzme", icon: "🏊", category: "hobbies" },
+        { german: "Musik", article: "die", turkish: "müzik", icon: "🎵", category: "hobbies" },
+        { german: "Gitarre", article: "die", turkish: "gitar", icon: "🎸", category: "hobbies" },
+        { german: "Klavier", article: "das", turkish: "piyano", icon: "🎹", category: "hobbies" },
+        { german: "Lesen", article: "das", turkish: "okuma", icon: "📖", category: "hobbies" },
+        { german: "Film", article: "der", turkish: "film", icon: "🎬", category: "hobbies" },
+        { german: "Spiel", article: "das", turkish: "oyun", icon: "🎮", category: "hobbies" },
+        { german: "Foto", article: "das", turkish: "fotoğraf", icon: "📷", category: "hobbies" },
+        { german: "Malen", article: "das", turkish: "resim yapma", icon: "🎨", category: "hobbies" },
+        { german: "Kochen", article: "das", turkish: "yemek yapma", icon: "👨‍🍳", category: "hobbies" },
+        { german: "Tanzen", article: "das", turkish: "dans", icon: "💃", category: "hobbies" },
+        { german: "Reisen", article: "das", turkish: "seyahat", icon: "✈️", category: "hobbies" },
+        { german: "Camping", article: "das", turkish: "kamp", icon: "⛺", category: "hobbies" },
+        { german: "Radfahren", article: "das", turkish: "bisiklet sürme", icon: "🚴", category: "hobbies" },
+        { german: "Wandern", article: "das", turkish: "yürüyüş", icon: "🥾", category: "hobbies" }
     ]
 };
 
 // Level definitions - 10 levels with 30 words each
 const LEVELS = {
-    1: { title: "Başlangıç 1", categories: ["numbers", "colors"], count: 30 },
-    2: { title: "Başlangıç 2", categories: ["family", "body"], count: 30 },
-    3: { title: "Hayvanlar Alemi", categories: ["animals"], count: 30 },
-    4: { title: "Okul ve Ev", categories: ["school", "home"], count: 30 },
-    5: { title: "Yiyecek ve İçecek", categories: ["food"], count: 30 },
-    6: { title: "Günlük Eylemler 1", categories: ["verbs"], count: 30 },
-    7: { title: "Günlük Eylemler 2", categories: ["verbs"], count: 30 },
-    8: { title: "Kıyafet ve Şehir", categories: ["clothes", "city"], count: 30 },
-    9: { title: "Doğa ve Meslekler", categories: ["nature", "jobs"], count: 30 },
-    10: { title: "Karışık Zor", categories: ["all"], count: 30 }
+    1: { title: "Temel Başlangıç", categories: ["numbers", "colors"], count: 30 },
+    2: { title: "Günler ve Aylar", categories: ["days", "months", "seasons"], count: 30 },
+    3: { title: "Aile ve Vücut", categories: ["family", "body"], count: 30 },
+    4: { title: "Hayvanlar Dünyası", categories: ["animals"], count: 30 },
+    5: { title: "Okul ve Ev", categories: ["school", "home"], count: 30 },
+    6: { title: "Yiyecek İçecek", categories: ["food"], count: 30 },
+    7: { title: "Şehir ve Ulaşım", categories: ["city", "transport"], count: 30 },
+    8: { title: "Kıyafet ve Hobiler", categories: ["clothes", "hobbies"], count: 30 },
+    9: { title: "Sıfatlar ve Sorular", categories: ["adjectives", "questions", "time"], count: 30 },
+    10: { title: "Fiiller ve Eylemler", categories: ["verbs"], count: 30 }
 };
 
 // Get all words as a flat array
@@ -454,7 +604,7 @@ const getWordsForLevel = (level) => {
     if (!levelConfig) return getRandomWords(30);
 
     let words = [];
-    
+
     // If specific categories are defined
     if (levelConfig.categories.includes("all")) {
         words = getAllWords();
@@ -464,24 +614,7 @@ const getWordsForLevel = (level) => {
         });
     }
 
-    // Shuffle and pick 30 words deterministically for the level if possible, or random
-    // For consistency, we'll shuffle with a seeded-like approach or just random for now
-    // Since levels should be consistent, we might want to pick specific ranges, but for this app random from categories is fine
-    // However, to ensure 30 distinct words per level, we shuffle and slice.
-    
-    // Özel mantık: Bazı kategoriler çok geniş (verbs gibi), bunları bölmek lazım.
-    // Level 6: Verbs ilk yarısı
-    // Level 7: Verbs ikinci yarısı
-    if (level === 6) {
-        const verbs = getWordsByCategory('verbs');
-        return verbs.slice(0, 30);
-    }
-    if (level === 7) {
-        const verbs = getWordsByCategory('verbs');
-        return verbs.slice(30, 60);
-    }
-
-    // Shuffle
+    // Shuffle and pick 30 words
     const shuffled = [...words].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 30);
 };

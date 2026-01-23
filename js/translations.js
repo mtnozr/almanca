@@ -37,6 +37,10 @@ const TRANSLATIONS = {
         allCategories: "Tüm Kategoriler",
         colors: "Renkler",
         numbers: "Sayılar",
+        days: "Günler",
+        months: "Aylar",
+        seasons: "Mevsimler",
+        time: "Zaman",
         animals: "Hayvanlar",
         school: "Okul",
         family: "Aile",
@@ -48,6 +52,10 @@ const TRANSLATIONS = {
         nature: "Doğa",
         city: "Şehir",
         jobs: "Meslekler",
+        transport: "Ulaşım",
+        hobbies: "Hobiler",
+        adjectives: "Sıfatlar",
+        questions: "Soru Kelimeleri",
         
         // Progress Screen
         myProgress: "İlerlemem",
@@ -117,6 +125,10 @@ const TRANSLATIONS = {
         // Categories
         categoryColors: "Renkler",
         categoryNumbers: "Sayılar",
+        categoryDays: "Günler",
+        categoryMonths: "Aylar",
+        categorySeasons: "Mevsimler",
+        categoryTime: "Zaman",
         categoryAnimals: "Hayvanlar",
         categorySchool: "Okul",
         categoryFamily: "Aile",
@@ -128,6 +140,10 @@ const TRANSLATIONS = {
         categoryNature: "Doğa",
         categoryCity: "Şehir",
         categoryJobs: "Meslekler",
+        categoryTransport: "Ulaşım",
+        categoryHobbies: "Hobiler",
+        categoryAdjectives: "Sıfatlar",
+        categoryQuestions: "Soru Kelimeleri",
         
         // Errors
         errorNoSpeech: "Sesli telaffuz desteklenmiyor",
@@ -179,6 +195,10 @@ const TRANSLATIONS = {
         allCategories: "Alle Kategorien",
         colors: "Farben",
         numbers: "Zahlen",
+        days: "Tage",
+        months: "Monate",
+        seasons: "Jahreszeiten",
+        time: "Zeit",
         animals: "Tiere",
         school: "Schule",
         family: "Familie",
@@ -190,6 +210,10 @@ const TRANSLATIONS = {
         nature: "Natur",
         city: "Stadt",
         jobs: "Berufe",
+        transport: "Verkehr",
+        hobbies: "Hobbys",
+        adjectives: "Adjektive",
+        questions: "Fragewörter",
         
         // Progress Screen
         myProgress: "Mein Fortschritt",
@@ -259,6 +283,10 @@ const TRANSLATIONS = {
         // Categories
         categoryColors: "Farben",
         categoryNumbers: "Zahlen",
+        categoryDays: "Tage",
+        categoryMonths: "Monate",
+        categorySeasons: "Jahreszeiten",
+        categoryTime: "Zeit",
         categoryAnimals: "Tiere",
         categorySchool: "Schule",
         categoryFamily: "Familie",
@@ -270,6 +298,10 @@ const TRANSLATIONS = {
         categoryNature: "Natur",
         categoryCity: "Stadt",
         categoryJobs: "Berufe",
+        categoryTransport: "Verkehr",
+        categoryHobbies: "Hobbys",
+        categoryAdjectives: "Adjektive",
+        categoryQuestions: "Fragewörter",
         
         // Errors
         errorNoSpeech: "Sprachausgabe wird nicht unterstützt",
