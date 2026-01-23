@@ -117,6 +117,7 @@ class WordGame {
         document.getElementById('sound-btn').addEventListener('click', () => this.playCurrentWord());
         
         // Settings
+        document.getElementById('dark-mode').addEventListener('change', (e) => this.updateSetting('darkMode', e.target.checked));
         document.getElementById('high-contrast').addEventListener('change', (e) => this.updateSetting('highContrast', e.target.checked));
         document.getElementById('disable-animations').addEventListener('change', (e) => this.updateSetting('disableAnimations', e.target.checked));
         document.getElementById('large-text').addEventListener('change', (e) => this.updateSetting('largeText', e.target.checked));
@@ -812,7 +813,7 @@ class WordGame {
             
             let starsHtml = '';
             for (let i = 0; i < 3; i++) {
-                starsHtml += i < stars ? ' ' : '';
+                starsHtml += i < stars ? '⭐' : '☆';
             }
             starsContainer.innerHTML = starsHtml;
             
@@ -1055,6 +1056,7 @@ class WordGame {
     
     loadSettings() {
         const defaultSettings = {
+            darkMode: false,
             highContrast: false,
             disableAnimations: false,
             largeText: false,
@@ -1062,9 +1064,15 @@ class WordGame {
             enableSpeech: true,
             hintsPerGame: 3
         };
-        
+
         const saved = localStorage.getItem('wordGameSettings');
-        return saved ? { ...defaultSettings, ...JSON.parse(saved) } : defaultSettings;
+        const settings = saved ? { ...defaultSettings, ...JSON.parse(saved) } : defaultSettings;
+
+        // Update settings checkboxes
+        const darkModeCheckbox = document.getElementById('dark-mode');
+        if (darkModeCheckbox) darkModeCheckbox.checked = settings.darkMode;
+
+        return settings;
     }
     
     saveSettings() {
@@ -1079,10 +1087,28 @@ class WordGame {
     
     applySettings() {
         const app = document.documentElement;
-        
+
+        app.setAttribute('data-dark-mode', this.settings.darkMode);
         app.setAttribute('data-high-contrast', this.settings.highContrast);
         app.setAttribute('data-disable-animations', this.settings.disableAnimations);
         app.setAttribute('data-large-text', this.settings.largeText);
+
+        // Update checkboxes to reflect current settings
+        const darkModeCheckbox = document.getElementById('dark-mode');
+        const highContrastCheckbox = document.getElementById('high-contrast');
+        const disableAnimationsCheckbox = document.getElementById('disable-animations');
+        const largeTextCheckbox = document.getElementById('large-text');
+        const enableSoundCheckbox = document.getElementById('enable-sound');
+        const enableSpeechCheckbox = document.getElementById('enable-speech');
+        const hintsSelect = document.getElementById('hints-per-game');
+
+        if (darkModeCheckbox) darkModeCheckbox.checked = this.settings.darkMode;
+        if (highContrastCheckbox) highContrastCheckbox.checked = this.settings.highContrast;
+        if (disableAnimationsCheckbox) disableAnimationsCheckbox.checked = this.settings.disableAnimations;
+        if (largeTextCheckbox) largeTextCheckbox.checked = this.settings.largeText;
+        if (enableSoundCheckbox) enableSoundCheckbox.checked = this.settings.enableSound;
+        if (enableSpeechCheckbox) enableSpeechCheckbox.checked = this.settings.enableSpeech;
+        if (hintsSelect) hintsSelect.value = this.settings.hintsPerGame;
     }
     
     loadProgress() {

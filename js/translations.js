@@ -42,6 +42,12 @@ const TRANSLATIONS = {
         family: "Aile",
         food: "Yiyecek",
         verbs: "Fiiller",
+        body: "Vücut",
+        clothes: "Kıyafetler",
+        home: "Ev",
+        nature: "Doğa",
+        city: "Şehir",
+        jobs: "Meslekler",
         
         // Progress Screen
         myProgress: "İlerlemem",
@@ -52,6 +58,8 @@ const TRANSLATIONS = {
         achievements: "Rozetler",
         
         // Settings Screen
+        appearance: "Görünüm",
+        darkMode: "Karanlık Mod",
         accessibility: "Erişilebilirlik",
         highContrast: "Yüksek Kontrast",
         disableAnimations: "Animasyonları Kapat",
@@ -114,6 +122,12 @@ const TRANSLATIONS = {
         categoryFamily: "Aile",
         categoryFood: "Yiyecek",
         categoryVerbs: "Fiiller",
+        categoryBody: "Vücut",
+        categoryClothes: "Kıyafetler",
+        categoryHome: "Ev",
+        categoryNature: "Doğa",
+        categoryCity: "Şehir",
+        categoryJobs: "Meslekler",
         
         // Errors
         errorNoSpeech: "Sesli telaffuz desteklenmiyor",
@@ -170,6 +184,12 @@ const TRANSLATIONS = {
         family: "Familie",
         food: "Essen",
         verbs: "Verben",
+        body: "Körper",
+        clothes: "Kleidung",
+        home: "Zuhause",
+        nature: "Natur",
+        city: "Stadt",
+        jobs: "Berufe",
         
         // Progress Screen
         myProgress: "Mein Fortschritt",
@@ -180,6 +200,8 @@ const TRANSLATIONS = {
         achievements: "Abzeichen",
         
         // Settings Screen
+        appearance: "Aussehen",
+        darkMode: "Dunkelmodus",
         accessibility: "Barrierefreiheit",
         highContrast: "Hoher Kontrast",
         disableAnimations: "Animationen deaktivieren",
@@ -242,6 +264,12 @@ const TRANSLATIONS = {
         categoryFamily: "Familie",
         categoryFood: "Essen",
         categoryVerbs: "Verben",
+        categoryBody: "Körper",
+        categoryClothes: "Kleidung",
+        categoryHome: "Zuhause",
+        categoryNature: "Natur",
+        categoryCity: "Stadt",
+        categoryJobs: "Berufe",
         
         // Errors
         errorNoSpeech: "Sprachausgabe wird nicht unterstützt",
