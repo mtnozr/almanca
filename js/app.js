@@ -427,9 +427,16 @@ class WordGame {
             <div class="memory-game">
                 ${shuffledCards.map((card, index) => `
                     <div class="memory-card" data-index="${index}" data-pair="${card.pair}" data-type="${card.type}">
-                        <span class="card-content" style="display: none;">
-                            ${card.type === 'german' ? `${card.article} ${card.german}` : card.turkish}
-                        </span>
+                        <div class="memory-card-inner">
+                            <div class="memory-card-face memory-card-back" aria-hidden="true">
+                                <span class="memory-card-icon">✨</span>
+                            </div>
+                            <div class="memory-card-face memory-card-front">
+                                <span class="card-content">
+                                    ${card.type === 'german' ? `${card.article} ${card.german}` : card.turkish}
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 `).join('')}
             </div>
@@ -622,8 +629,6 @@ class WordGame {
         if (card.classList.contains('matched') || card.classList.contains('flipped')) return;
         
         card.classList.add('flipped');
-        const cardContent = card.querySelector('.card-content');
-        cardContent.style.display = 'block';
         
         this.selectedCards.push(card);
         
@@ -642,8 +647,6 @@ class WordGame {
                     // No match
                     card1.classList.remove('flipped');
                     card2.classList.remove('flipped');
-                    card1.querySelector('.card-content').style.display = 'none';
-                    card2.querySelector('.card-content').style.display = 'none';
                     this.wrongAnswer();
                 }
                 this.selectedCards = [];
