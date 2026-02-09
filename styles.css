@@ -421,6 +421,17 @@ body {
     border-color: var(--primary-dark);
 }
 
+.menu-btn.hero {
+    grid-column: 1 / -1;
+    min-height: 150px;
+    font-size: var(--font-size-xl);
+    box-shadow: var(--shadow-heavy);
+}
+
+.menu-btn.hero .icon {
+    font-size: calc(var(--font-size-xxxl) * 1.1);
+}
+
 .menu-btn.secondary {
     background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
     color: var(--text-light);
